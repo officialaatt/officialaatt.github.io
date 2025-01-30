@@ -88,6 +88,7 @@ get(leagueRef).then(snapshot => {
 document.getElementById("adplbtn").addEventListener('click', function(){
   let selectedLeague = document.getElementById("leagur").value;
   let plname = document.getElementById("playername").value;
+  plname = plname.toUpperCase()
   let plposition = document.getElementById("plpos").value;
   update(ref(db, 'leagues/' + selectedLeague),{
     [plname] : plposition

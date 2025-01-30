@@ -179,18 +179,18 @@ select{
 .league {
     margin: 10px;                /* Add some space between the items */
     padding: 30px;               /* Add padding for better appearance */
-    border: 1.5px solid black;   /* Border around each league */
+    border: 1.5px solid #02020254;   /* Border around each league */
     font-size: 20px;             /* Font size */
     border-radius: 10px;         /* Rounded corners */
     flex: 1 1 200px;             /* Allow items to grow and shrink, with a base width of 200px */
     text-align: center;          /* Center text inside the div */
     max-width: fit-content;
     transition: transform 0.3s, box-shadow 0.3s;
-    background-color: rgb(214, 214, 214);
+    background-color: rgb(245, 245, 245);
 }
 .league:hover{
     transform: translateY(-5px); /* Move the div up slightly */
-    box-shadow: 0 8px 20px rgba(255, 0, 255, 0.3); /* Increase shadow on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
 }
 table{
     max-width: 500px;
@@ -220,4 +220,8 @@ table{
     background-color: #15b715;
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+#no-results{
+    display: none;
+    color: #333;
 }

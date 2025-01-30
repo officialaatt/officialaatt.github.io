@@ -94,50 +94,64 @@ get(leagueRef).then(snapshot => {
 
 // Function to display league data in a table
 function displayLeagueData(leagueData) {
-  const selectLeague = document.getElementById("selectleague");
-  selectLeague.style.display = 'none'; // Hide the league selection
+    const selectLeague = document.getElementById("selectleague");
+    selectLeague.style.display = 'none'; // Hide the league selection
 
-  // Create a table element
-  const table = document.createElement('table');
-  table.style.width = '100%'; // Set table width
-  table.border = '1'; // Add border to the table
+    // Create a table element
+    const table = document.createElement('table');
+    table.style.width = '100%'; // Set table width
+    table.border = '1'; // Add border to the table
 
-  // Create table header
-  const headerRow = table.insertRow();
-  const headerCell1 = headerRow.insertCell(0);
-  const headerCell2 = headerRow.insertCell(1);
-  headerCell1.innerHTML = "<b>Player</b>";
-  headerCell2.innerHTML = "<b>Position</b>";
+    // Create table header
+    const headerRow = table.insertRow();
+    const headerCell1 = headerRow.insertCell(0);
+    const headerCell2 = headerRow.insertCell(1);
+    headerCell1.innerHTML = "<b>Player</b>";
+    headerCell2.innerHTML = "<b>Position</b>";
 
-  // Populate the table with league data
-  for (const key in leagueData) {
-      if (leagueData.hasOwnProperty(key) && key !== '*') { // Check if key is not '*'
-          const row = table.insertRow();
-          const cell1 = row.insertCell(0);
-          const cell2 = row.insertCell(1);
-          cell1.textContent = key.toUpperCase(); // Set key in the left cell
-          cell2.textContent = leagueData[key]; // Set corresponding value in the right cell
-      }
-  }
+    // Convert leagueData to an array and sort by position
+    const sortedPlayers = Object.entries(leagueData)
+        .filter(([key]) => key !== '*') // Exclude unwanted keys
+        .sort((a, b) => a[1] - b[1]); // Sort by position (assuming position is a number)
 
-  // Append the table to the body or a specific container
-  document.body.appendChild(table); // You can change this to append to a specific container
+    // Populate the table with sorted league data
+    sortedPlayers.forEach(([playerName, position]) => {
+        const row = table.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        cell1.textContent = playerName; // Set player name in the left cell
+        cell2.textContent = position; // Set corresponding position in the right cell
+    });
+
+    // Append the table to the body or a specific container
+    document.body.appendChild(table); // You can change this to append to a specific container
 }
 
 // Search functionality
 const searchBox = document.getElementById('searchbox');
 const selectLeague = document.getElementById('selectleague'); // Get the parent container
+const noResultsMessage = document.getElementById('no-results'); // Get the no results message element
 
 searchBox.addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
     const leagueDivs = selectLeague.querySelectorAll('.league'); // Get the league divs *within* the container
 
+    let hasResults = false; // Flag to track if there are any results
+
     Array.from(leagueDivs).forEach(div => {  // Iterate over ALL divs
         const divText = div.textContent.toLowerCase();
         if (divText.includes(searchTerm)) {
             div.style.display = ''; // Show if it matches
+            hasResults = true; // Set flag to true if there's a match
         } else {
             div.style.display = 'none'; // Hide if it doesn't
         }
     });
+
+    // Show or hide the no results message based on the search results
+    if (hasResults) {
+        noResultsMessage.style.display = 'none'; // Hide the message if there are results
+    } else {
+        noResultsMessage.style.display = 'block'; // Show the message if there are no results
+    }
 });
