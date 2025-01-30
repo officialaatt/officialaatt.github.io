@@ -16,7 +16,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-
 // Handle hamburger click to toggle menu
 document.getElementById("hamburger").addEventListener('click', function() {
     const hamburger = document.querySelector('.hamburger');
@@ -34,7 +33,7 @@ document.getElementById("hamburger").addEventListener('click', function() {
         menuBackground.style.display = 'none'; // Hide the background overlay
     }
 });
-  
+
 // Close menu when clicking on the blurred background
 document.getElementById("menu-background").addEventListener('click', function() {
     const hamburger = document.querySelector('.hamburger');
@@ -46,26 +45,99 @@ document.getElementById("menu-background").addEventListener('click', function() 
     menuBackground.style.display = 'none'; // Hide the background overlay
 });
 
-//leagues
+// Leagues
+let selectedLeague = ""; // Declare the variable globally
+
+// Fetch leagues from Firebase and create league divs
 const leagueRef = ref(db, 'leagues/');
 
 get(leagueRef).then(snapshot => {
-  const leagueSelect = document.getElementById("leagur"); // Get the select element
+    const selectLeague = document.getElementById("selectleague"); // Get the selectleague container
 
-  if (snapshot.exists()) {
-    leagueSelect.innerHTML = ""; // Clear existing options (if any)
-    const leagueNames = Object.keys(snapshot.val()); // Extract all league names (keys)
-      
-    // Create an option for each league
-    leagueNames.forEach(leagueName => {
-      const option = document.createElement("option");
-      option.value = leagueName; // Set the value to the league name
-      option.textContent = leagueName; // Set the text content to the league name
-      leagueSelect.appendChild(option); // Add the option to the select element
-    });
-  } else {
-    console.log("No leagues found in the database");
-  }
+    if (snapshot.exists()) {
+        selectLeague.innerHTML = ""; // Clear existing league divs (if any)
+        const leagueNames = Object.keys(snapshot.val()); // Extract all league names (keys)
+
+        // Create a div for each league
+        leagueNames.forEach(leagueName => {
+            const leagueDiv = document.createElement("div");
+            leagueDiv.className = "league"; // Set the class name
+            leagueDiv.innerHTML = `<b>${leagueName}</b>`; // Set the inner HTML with the league name
+            
+            // Add click event listener to each league div
+            leagueDiv.addEventListener('click', function() {
+                selectedLeague = leagueName; // Extract the league name and save it in the global variable
+                console.log("Selected League:", selectedLeague); // Log the selected league
+
+                // Fetch data for the selected league
+                const leagueDataRef = ref(db, `leagues/${selectedLeague}`);
+                get(leagueDataRef).then(dataSnapshot => {
+                    if (dataSnapshot.exists()) {
+                        const leagueData = dataSnapshot.val(); // Get the data for the selected league
+                        displayLeagueData(leagueData); // Call function to display data
+                    } else {
+                        console.log("No data found for the selected league");
+                    }
+                }).catch(error => {
+                    console.error("Error fetching league data:", error);
+                });
+            });
+
+            selectLeague.appendChild(leagueDiv); // Add the league div to the selectleague container
+        });
+    } else {
+        console.log("No leagues found in the database");
+    }
 }).catch(error => {
-  console.error("Error fetching leagues:", error);
+    console.error("Error fetching leagues:", error);
+});
+
+// Function to display league data in a table
+function displayLeagueData(leagueData) {
+  const selectLeague = document.getElementById("selectleague");
+  selectLeague.style.display = 'none'; // Hide the league selection
+
+  // Create a table element
+  const table = document.createElement('table');
+  table.style.width = '100%'; // Set table width
+  table.border = '1'; // Add border to the table
+
+  // Create table header
+  const headerRow = table.insertRow();
+  const headerCell1 = headerRow.insertCell(0);
+  const headerCell2 = headerRow.insertCell(1);
+  headerCell1.innerHTML = "<b>Player</b>";
+  headerCell2.innerHTML = "<b>Position</b>";
+
+  // Populate the table with league data
+  for (const key in leagueData) {
+      if (leagueData.hasOwnProperty(key) && key !== '*') { // Check if key is not '*'
+          const row = table.insertRow();
+          const cell1 = row.insertCell(0);
+          const cell2 = row.insertCell(1);
+          cell1.textContent = key.toUpperCase(); // Set key in the left cell
+          cell2.textContent = leagueData[key]; // Set corresponding value in the right cell
+      }
+  }
+
+  // Append the table to the body or a specific container
+  document.body.appendChild(table); // You can change this to append to a specific container
+}
+
+// Search functionality
+const searchBox = document.getElementById('searchbox');
+const selectLeague = document.getElementById('selectleague'); // Get the parent container
+
+searchBox.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const leagueDivs = selectLeague.querySelectorAll('.league'); // Get the league divs *within* the container
+
+    Array.from(leagueDivs).forEach(div => {  // Iterate over ALL divs
+        const divText = div.textContent.toLowerCase();
+        if (divText.includes(searchTerm)) {
+            div.style.display = ''; // Show if it matches
+        } else {
+            div.style.display = 'none'; // Hide if it doesn't
+        }
+    });
 });

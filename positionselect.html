@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="rmain.js"></script>
+    <script type="module" src="posmain.js"></script>
     <title>AATT</title>
 </head>
 <body>
@@ -27,11 +27,11 @@
     <div class="menu-background" id="menu-background" onclick="closeMenu()"></div>
 
     <hr color="red" width="300px">
-    <h1 id="searchh1">AATT</h1>
-    <b id="searchp">Leagues</b>
-    <br>
-    <input type="text" id="searchbox" placeholder="Search....">
-    <br>
-    <div id="selectleague"></div>
+    <h1>League for overall Position</h1>
+    <div class="leagueselect">
+        <label for="leagur">Select League</label>
+        <select name="leagur" id="leagur"></select>
+    </div>
+    <button id="selleague"><b>Set League</b></button>
 </body>
 </html>
