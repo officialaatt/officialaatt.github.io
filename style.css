@@ -1,0 +1,223 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10;
+    text-align: center;
+    justify-content: center;
+}
+.nav {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: center; /* Center items horizontally */
+    background-color: rgb(255, 68, 68); /* Background color for the nav */
+    padding: 10px 30px; /* Padding around the nav */
+    position: sticky; /* Position relative for absolute positioning of logo */
+    margin: auto;
+    border-radius: 10px;
+    height: fit-content;
+    color: white;
+    z-index: 3;
+    top: 10;
+}
+.logo {
+    position: absolute; /* Position logo absolutely */
+    left: 7px; /* Space from the left */
+    width: 30px;
+    border-radius: 50%;
+}
+h1{
+    text-align: center;
+}
+.addl, .addpl {
+    background-color: #ff4444;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    width: 300px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s; /* Added transition for smooth effect */
+}
+.addl:hover, .addpl:hover {
+    transform: translateY(-5px); /* Move the div up slightly */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
+}
+.addl button, .addpl button{
+    background-color: #17d817;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+}
+.addl button:hover, .addpl button:hover{
+    background-color: #15b715; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly increase size */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+}
+h3{
+    margin: 0px;
+}
+.addl input{
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.addpl input{
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.pos{
+    width: 110;
+    text-align: center;
+    margin-top: 10px;
+}
+label{
+    font-size: large;
+}
+select{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: medium;
+    padding: 3px;
+    border: none;
+}
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px; /* Width of the hamburger menu */
+    height: 30px; /* Height of the hamburger menu */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    position: absolute;
+    right: 10px;
+}
+.bar {
+    height: 4px; /* Height of each bar */
+    width: 100%; /* Full width */
+    background-color: white; /* Color of the bars */
+    border-radius: 5px; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0; /* Hide the middle bar */
+}
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+.menu {
+    position: fixed;
+    bottom: 10px;
+    right: -300px; /* Initially off-screen */
+    width: 250px;
+    height: 515px;
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    transition: right 0.3s ease;
+    z-index: 3;
+    border-radius: 10px;
+}
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    margin: 20px 0;
+}
+.menu-background {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+#searchh1{
+    z-index: 1;
+    position: relative;
+}
+#searchp{
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 50px;
+    color: rgba(0, 0, 0, 0.1);
+    z-index: 0;
+}
+#searchbox{
+    padding: 10px;
+    font-size: 15px;
+    width: 70%;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+#selectleague {
+    display: flex;               /* Use flexbox for layout */
+    justify-content: center;     /* Center items horizontally */
+    align-items: center;         /* Center items vertically */
+    flex-wrap: wrap;             /* Allow items to wrap to the next line */
+}
+
+.league {
+    margin: 10px;                /* Add some space between the items */
+    padding: 30px;               /* Add padding for better appearance */
+    border: 1.5px solid black;   /* Border around each league */
+    font-size: 20px;             /* Font size */
+    border-radius: 10px;         /* Rounded corners */
+    flex: 1 1 200px;             /* Allow items to grow and shrink, with a base width of 200px */
+    text-align: center;          /* Center text inside the div */
+    max-width: fit-content;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: rgb(214, 214, 214);
+}
+.league:hover{
+    transform: translateY(-5px); /* Move the div up slightly */
+    box-shadow: 0 8px 20px rgba(255, 0, 255, 0.3); /* Increase shadow on hover */
+}
+table{
+    max-width: 500px;
+    margin: auto;
+}
+.leagueselect{
+    background-color: rgb(214, 214, 214);
+    padding: 10px;
+    padding-bottom: 0px;
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+    border: 1.5px solid rgba(0, 0, 0, 0.377);
+}
+#selleague{
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #17d817;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+#selleague:hover{
+    background-color: #15b715;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
